@@ -1,0 +1,11 @@
+public class Solution {
+    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+        //nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+        //Output: [1,2,2,3,5,6]
+        
+        for(int k=0;k<nums2.Length;k++){
+            nums1[m+k]=nums2[k];
+        }
+        Array.Sort(nums1);
+    }
+}
