@@ -1,0 +1,14 @@
+public class Solution {
+    public int RemoveElement(int[] nums, int val) {
+        //Input: nums = [0,1,2,2,3,0,4,2], val = 2
+        //Output: 5, nums = [0,1,4,0,3,_,_,_]  [3,2,2,3]
+        int counter=0;
+        for(int i=0;i<nums.Length;i++){
+            if(nums[i]!=val){
+                nums[counter]=nums[i];
+                counter++;
+            }
+        }
+        return counter;
+    }
+}
