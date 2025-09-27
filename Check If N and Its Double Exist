@@ -1,0 +1,27 @@
+Given an array arr of integers, check if there exist two indices i and j such that :
+
+i != j
+0 <= i, j < arr.length
+arr[i] == 2 * arr[j]
+------------------------------------------
+public class Solution {
+    public bool CheckIfExist(int[] arr) {
+        
+        //Edge Case handle
+        if(arr==null || arr.Length==0){
+            return false;
+        }
+        //Looping for condition and result
+        for(int i=0;i<arr.Length;i++){
+            for(int j=0;j<arr.Length;j++){
+                if(i!=j){
+                    if(arr[i] == 2 * arr[j]){
+                        return true;
+                    }
+                }
+            }
+        }
+        //If not result
+        return false;
+    }
+}
