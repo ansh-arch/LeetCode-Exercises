@@ -1,0 +1,31 @@
+Given a string s, return the length of the longest substring that contains at most two distinct characters.
+
+Input: s = "eceba"
+Output: 3
+Explanation: The substring is "ece" which its length is 3.
+
+public int LengthOfLongestSubstringTwoDistinct(string s) {
+        //find the substring having at most two distinct chars
+        //find the length of each substring
+        //maxlength?
+        //s = "eceba" 
+        
+        var window=new Dictionary<char,int>();
+        int left=0, maxL=0;
+        
+        for(int right=0;right<s.Length;right++){
+            char c=s[right];
+            window[c]=window.GetValueOrDefault(c)+1;
+            while(!(window.Count<=2)){
+                char leftchar=s[left];
+                window[leftchar]--;
+                if(window[leftchar]==0){
+                    window.Remove(leftchar);
+                }
+                left++;
+            }
+            maxL=Math.Max(maxL,right-left+1);
+        }
+        
+        return maxL;
+    }
