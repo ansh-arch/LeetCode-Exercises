@@ -1,0 +1,65 @@
+Sometimes people repeat letters to represent extra feeling. For example:
+"hello" -> "heeellooo"
+"hi" -> "hiiii"
+In these strings like "heeellooo", we have groups of adjacent letters that are all the same: "h", "eee", "ll", "ooo".
+You are given a string s and an array of query strings words. A query word is stretchy if it can be made to be equal to s by any number of applications of the following extension operation: choose a group consisting of characters c, and add some number of characters c to the group so that the size of the group is three or more.
+For example, starting with "hello", we could do an extension on the group "o" to get "hellooo", but we cannot get "helloo" since the group "oo" has a size less than three. Also, we could do another extension like "ll" -> "lllll" to get "helllllooo". If s = "helllllooo", then the query word "hello" would be stretchy because of these two extension operations: query = "hello" -> "hellooo" -> "helllllooo" = s.
+Return the number of query strings that are stretchy.
+
+Input: s = "heeellooo", words = ["hello", "hi", "helo"]
+Output: 1
+Explanation: 
+We can extend "e" and "o" in the word "hello" to get "heeellooo".
+We can't extend "helo" to get "heeellooo" because the group "ll" is not size 3 or more.
+
+public int ExpressiveWords(string s, string[] words) {        
+        //both chars are equal
+        //Find the lenght of consecutive chars
+        //check length constraints
+        int ans=0;
+        foreach(string word in words){
+            if(IsStretchy(s,word)){
+                ans++;
+            }
+        }
+        return ans;
+    }
+    
+    bool IsStretchy(string s, string word){
+        int i=0,j=0;
+        while(i<s.Length && j<word.Length){
+            char ch1=s[i];
+            char ch2=word[j];
+            if(ch1==ch2){
+                int len1=CheckLength(s,i);
+                int len2=CheckLength(word,j);
+                if(len1==len2){
+                    i=i+len1;
+                    j=j+len2; //Word
+                    continue;
+                }else if(len1>=3 && len2<len1){
+                    //Nothing -jump forward
+                }else{
+                    return false;
+                }          
+                i=i+len1;
+                j=j+len2;       
+            }else{
+                return false;
+            }
+        }
+        return i==s.Length && j==word.Length;
+    }
+    
+    int CheckLength(string s, int i){
+        int c=1;
+        i++;
+        for(;i<s.Length;i++){
+            if(s[i]==s[i-1]){
+                c++;
+            }else{
+                break;
+            }
+        }
+        return c;
+    }
