@@ -1,0 +1,26 @@
+Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.
+
+Input: intervals = [[0,30],[5,10],[15,20]]
+Output: 2
+
+Input: intervals = [[5,8],[6,8]]
+Output: 2
+
+public int MinMeetingRooms(int[][] intervals) {
+        //If the current meeting starts after the earliest ending, reuse the room, 
+        //Otherwise allocate new room.
+        if(intervals==null || intervals.Length==0){
+            return 0;
+        }
+        
+        Array.Sort(intervals,(a,b)=>a[0].CompareTo(b[0]));
+        var pq=new PriorityQueue<int,int>();
+        foreach(var m in intervals){
+            int s=m[0], e=m[1];
+            if(pq.Count>0 && pq.Peek()<=s){
+                pq.Dequeue();//Reuse Room
+            }
+            pq.Enqueue(e,e); //Allocate room
+        }
+        return pq.Count;
+    }
