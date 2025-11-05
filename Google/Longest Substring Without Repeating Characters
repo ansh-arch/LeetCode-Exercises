@@ -1,0 +1,46 @@
+Given a string s, find the length of the longest substring without duplicate characters.
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3. Note that "bca" and "cab" are also correct answers.
+Example 2:
+
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+
+public int LengthOfLongestSubstring(string s) {
+        //Longest contiguous substring having no duplicate characters.
+        //If no condition - length of string == length of max. substring.
+        //Sliding Window Algo
+        //Remove all duplicate characters and count --> max length of substring.
+        //-------------------------- O(n2) -------------------------
+        // HashSet<char> hs=new();
+        // int shrinkFromLeft=0,maxlength=0;
+        // for(int i=0;i<s.Length;i++){
+        //     //If contains that char, then remove from hs and shrink the window from start
+        //     while(hs.Contains(s[i])){
+        //         hs.Remove(s[shrinkFromLeft]);
+        //         shrinkFromLeft++;
+        //     }
+        //     //Now add that char at the end
+        //     hs.Add(s[i]);
+        //     //Now check max count in hs
+        //     maxlength=Math.Max(maxlength,hs.Count());
+        // }
+        // return maxlength;
+        //--------------------------------- O(n) --------------------
+        Dictionary<char,int> dict=new();
+        int left=0;
+        int maxlen=0;
+        for(int right=0;right<s.Length;right++){
+            if(dict.ContainsKey(s[right])){
+                left=Math.Max(dict[s[right]],left);
+            }
+            maxlen=Math.Max(maxlen,right-left+1);
+            dict[s[right]]=right+1;
+        }
+        return maxlen;
+
+    }
