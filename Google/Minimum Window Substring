@@ -1,0 +1,48 @@
+Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+
+The testcases will be generated such that the answer is unique.
+
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+
+public string MinWindow(string s, string t) {
+        Dictionary<char, int> dt=new();
+        foreach(char c in t){
+            dt[c]=dt.GetValueOrDefault(c)+1;
+        }
+        
+        Dictionary<char,int> dw=new();
+        int l=0,r=0,minL=int.MaxValue,startInd=0,countV=0;
+        
+        while(r<s.Length){
+            char c=s[r];
+            r++;
+            
+            //Valid count
+            if(dt.ContainsKey(c)){
+                dw[c]=dw.GetValueOrDefault(c)+1;
+                if(dw[c]==dt[c]){
+                    countV++;
+                }
+            }
+            
+            //Calculate minL and Slide from left
+            while(countV==dt.Count){
+                if(r-l<minL){
+                    minL=r-l;
+                    startInd=l;
+                }
+                //Sliding from left for window
+                char d=s[l];
+                l++;
+                if(dt.ContainsKey(d)){
+                    if(dw[d]==dt[d]){
+                        countV--;
+                    }
+                    dw[d]--;
+                }
+            }
+        }
+        return minL==int.MaxValue?"":s.Substring(startInd,minL);
+    }
